@@ -17,6 +17,9 @@
   run` provisions a container as per configuration. The longer you run a
   machine, the more likely the machine (virtual or otherwise) drifts from its
   original configuration.
+- Environments are managed through configuration files,
+which can be version-controlled, diffed, examined, debugged, reused, and forked.
+
 
 ## Requirements
 
@@ -32,8 +35,14 @@ guide.
 
 Docker is a container service that you can run on your local machine.
 
+## Why would you want to run a private Ethereum node?
 
-## Run an Ethereum node in a Docker container
+* Consistent environments for development and production.
+* Own your Ethereum account and keys.
+
+## Run a Private Ethereum node in a Docker container
+
+WARNING: The following instructions show you how to start a local Ethereum node with Docker. You MUST publish the RPC ports at 0.0.0.0 when running a node in a docker container. Because a container should have a single purpose, the rpc service 
 
 1. Create a "data" directory. Docker containers cannot and should not be used to hold data that needs to be persistent. You can either persist data in Docker "volumes" (`docker volume create <volume_name>`) to allow Docker to create virtual volumes that it manages for you (necessary in container orchestration and deploying to a Docker-compatible cloud compute service), or tell Docker to mount a local directory (useful in development environments, where you might want easy access to the contents of mounted volumes) as a local directory.
 2. Run the `ethereum/client-go` container.
@@ -61,10 +70,4 @@ Notes:
 - Geth exposes JSON-RPC service on port 8545
 - Need to expose JSON-RPC service on `0.0.0.0`. By default, publishes to `127.0.0.1`, which only allows `localhost` access internally. Publishing to `0.0.0.0` allows **public** access your `go-client` container's RPC service. **DO NOT DO THIS IN PRODUCTION**. (1) re-check why this is necessary (2) check if this is only applicable to Docker on macOS, because Linux Docker containers all have publicly accessible IP addresses (IIRC).
 
-## Compile a Solidity contract with Docker
-
-- Need `solc` to compile Solidity contracts, which we then compile to an ABI (Application Binary Interface) with Go bindings with the `abigen` tool. Compiling Solidity contracts to an [Ethereum Contract ABI](https://solidity.readthedocs.io/en/v0.5.8/abi-spec.html) allows us to interact with the contract using a programming language of our choice. 
-- Solidity only [publishes binaries](https://github.com/ethereum/solidity/releases) for minor versions (see semver). That means that to use a specific patch version e.g. 0.4.21, you have to either build the binaries yourself, or use a prebuilt Docker image e.g. `docker run ethereum/solidity:0.4.24` to use the version `0.4.24` of the Solidity compiler.
-
-NOTE: `solc --optimize --bin sourceFile.sol` to optimize compiled contract for deployment
 
