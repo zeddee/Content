@@ -1,8 +1,8 @@
-# Docker for Developing DApps with Geth
+# Docker for Developing DApps with geth
 
 ## Problem statement
 
-- Lots of resources being put into development of Ethereum Geth codebase changes
+- Lots of resources being put into development of Ethereum geth codebase changes
   rapidly. Stabilize DApp builds — you'll want to consciously select
   dependencies and build environments; upgrade selectively to keep environment
   consistent and known. Building on Windows is difficult. For example,
@@ -20,15 +20,21 @@
 - Environments are managed through configuration files,
 which can be version-controlled, diffed, examined, debugged, reused, and forked.
 
+## Why use Docker instead of <insert tool here>
+
+- Docker allows you to get as close to a production environment as possible. I
+- Docker gives you a clean and controlled environment to work with.
+- 
+
 
 ## Requirements
 
-- Docker 18.0.9 (Community version suffices) Geth 1.8.2x
+- Docker 18.0.9 (Community version suffices) geth 1.8.2x
 
 Download the 
 [example application](https://github.com/kauri-io/Content/tree/master/go-ethereum-guides/write-basic-quiz-dapp-in-go/quiz-dapp),
 from the [Creating a DApp in Go with
-Geth](https://kauri.io/article/60a36c1b17d645939f63415218dc24f9/v2/creating-a-dapp-in-go-with-geth)
+geth](https://kauri.io/article/60a36c1b17d645939f63415218dc24f9/v2/creating-a-dapp-in-go-with-geth)
 guide.
 
 ## What does Docker do?
@@ -42,7 +48,7 @@ Docker is a container service that you can run on your local machine.
 
 ## Run a Private Ethereum node in a Docker container
 
-WARNING: The following instructions show you how to start a local Ethereum node with Docker. You MUST publish the RPC ports at 0.0.0.0 when running a node in a docker container. Because a container should have a single purpose, the rpc service 
+WARNING: The following instructions show you how to start a local Ethereum node with Docker. You MUST publish the RPC ports at 0.0.0.0 when running a node in a docker container in order to be able to access the node through a JSON-RPC endpoint, because the geth JSON-RPC service is by default bound to `127.0.0.1` or the loopback IP address, which can only be accessed locally i.e. from within the container itself.
 
 1. Create a "data" directory. Docker containers cannot and should not be used to hold data that needs to be persistent. You can either persist data in Docker "volumes" (`docker volume create <volume_name>`) to allow Docker to create virtual volumes that it manages for you (necessary in container orchestration and deploying to a Docker-compatible cloud compute service), or tell Docker to mount a local directory (useful in development environments, where you might want easy access to the contents of mounted volumes) as a local directory.
 2. Run the `ethereum/client-go` container.
@@ -67,7 +73,7 @@ docker run -it -v $(pwd)/data:/root/.ethereum -p 8545:8545 -p 30303:30303 ethere
 
 Notes:
 
-- Geth exposes JSON-RPC service on port 8545
+- geth exposes JSON-RPC service on port 8545
 - Need to expose JSON-RPC service on `0.0.0.0`. By default, publishes to `127.0.0.1`, which only allows `localhost` access internally. Publishing to `0.0.0.0` allows **public** access your `go-client` container's RPC service. **DO NOT DO THIS IN PRODUCTION**. (1) re-check why this is necessary (2) check if this is only applicable to Docker on macOS, because Linux Docker containers all have publicly accessible IP addresses (IIRC).
 
 

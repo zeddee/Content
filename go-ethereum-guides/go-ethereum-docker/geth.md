@@ -10,9 +10,23 @@
 | `rlpdump` | Developer utility tool to convert binary RLP ([Recursive Length Prefix](https://github.com/ethereum/wiki/wiki/RLP)) dumps (data encoding used by the Ethereum protocol both network as well as consensus wise) to user-friendlier hierarchical representation (e.g. `rlpdump --hex CE0183FFFFFFC4C304050583616263`). |
 | `puppeth` | a CLI wizard that aids in creating a new Ethereum network. |
 
+# geth
 
+Running the geth starts an Ethereum client that functions as an Ethereum node by itself,
+and can act as a gateway through which other applications can use to connect to an Ethereum network.
 
+Starting geth with the `console` option starts a light, or "fast-sync", node,
+and geth's interactive Javascript console that allows you to call the web3 Javascript DApp API
+and the admin API,
 
-# Geth
+You can connect to a running geth node on the default IPC endpoint (`$HOME/.ethereum/geth.ipc`, `/tmp/geth.ipc` when running a `--dev` node, or `$HOME/.ethereum/<testnet>/geth.ipc` when running a testnet nodoe e.g. running a Rinkeby node with `geth --rinkeby` will open a geth IPC endpoint on `$HOME/.ethereum/rinkeby/geth.ipc`)by running `geth attach`
 
-Geth is 
+You can also run `geth attach` on any geth IPC or JSON-RPC endpoint. For example, run:
+
+- `geth attach ipc:/some/custom/path/geth.ipc` to connect to an IPC endpoint on a custom path.
+- `geth attach http://192.168.1.2:8545` to connect to a JSON-RPC endpoint through HTTPS on `192.168.1.2`.
+- `geth attach ws://192.168.1.2:8546` to connect to a JSON-RPC endpoint through websockets on `192.168.1.2`.
+
+https://github.com/ethereum/go-ethereum/wiki/JavaScript-Console
+
+Running `docker ethereum/client-go geth` starts a "fast-sync" node by default.
