@@ -25,8 +25,12 @@ You can also run `geth attach` on any geth IPC or JSON-RPC endpoint. For example
 
 - `geth attach ipc:/some/custom/path/geth.ipc` to connect to an IPC endpoint on a custom path.
 - `geth attach http://192.168.1.2:8545` to connect to a JSON-RPC endpoint through HTTPS on `192.168.1.2`.
-- `geth attach ws://192.168.1.2:8546` to connect to a JSON-RPC endpoint through websockets on `192.168.1.2`.
+- `geth attach ws://192.168.1.2:8546` to connect to a JSON-RPC endpoint through WebSockets on `192.168.1.2`.
 
 https://github.com/ethereum/go-ethereum/wiki/JavaScript-Console
 
 Running `docker ethereum/client-go geth` starts a "fast-sync" node by default.
+
+## enabling management APIs over IPC and JSON-RPC
+
+By default Geth enables all APIs over the IPC (ipc) interface and only the `db`, `eth`, `net` and `web3` APIs over the HTTP and WebSocket interfaces.
