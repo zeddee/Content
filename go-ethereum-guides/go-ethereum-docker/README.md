@@ -29,7 +29,7 @@ which can be version-controlled, diffed, examined, debugged, reused, and forked.
 
 ## Requirements
 
-- Docker 18.0.9 (Community version suffices) geth 1.8.2x
+- Docker 18.09 (Community version suffices) geth 1.8.2x
 
 Download the 
 [example application](https://github.com/kauri-io/Content/tree/master/go-ethereum-guides/write-basic-quiz-dapp-in-go/quiz-dapp),
